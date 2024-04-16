@@ -1,0 +1,43 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s?$": [
+      "@swc/jest"
+    ]
+  },
+  "moduleNameMapper": {
+    "^@src/(.*)$": "<rootDir>/src/$1",
+    "^@products/(.*)$": "<rootDir>/src/products/$1",
+    "^@file-upload/(.*)$": "<rootDir>/src/file-upload/$1",
+    "^@category-product/(.*)$": "<rootDir>/src/category-product/$1",
+    "^@auth/(.*)$": "<rootDir>/src/auth/$1",
+    "^@categories/(.*)$": "<rootDir>/src/categories/$1",
+    "^@common/(.*)$": "<rootDir>/src/common/$1"
+  },
+  "collectCoverageFrom": [
+    "**/*.(t|j)s"
+  ],
+  "coverageDirectory": "./coverage",
+  "coveragePathIgnorePatterns": [
+    "./src/config/",
+    "./src/common/",
+    ".module.ts",
+    "./coverage/",
+    "./test/unit/database/*",
+    "./test/unit/products/stub/product.model.ts",
+    "./test/unit/categories/stub/category.model.ts",
+    "./test/unit/category-product/stub/category-product.model.ts",
+    "main.ts",
+    "interfaces.ts",
+    "./dist",
+    "index.ts",
+    ".eslintrc.js"
+  ],
+  "testEnvironment": "node"
+}

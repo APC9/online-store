@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@src/*": ["src/*"],
+      "@products/*": ["src/products/*"],
+      "@categories/*": ["src/categories/*"],
+      "@file-upload/*": ["src/file-upload/*"],
+      "@auth/*": ["src/auth/*"],
+      "@category-product/*": ["src/category-product/*"],
+      "@common/*": ["src/common/*"],
+    },
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
+}
