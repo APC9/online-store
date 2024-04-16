@@ -44,3 +44,6 @@ http://localhost:3000/api/docs
 * Nestjs
 * Docker
 * Swagger
+
+
+## github action
