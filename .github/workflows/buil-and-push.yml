@@ -40,8 +40,8 @@ jobs:
         with:
           images: apc91/online-store
           tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}}-${{ matrix.platform }}
+            type=semver,pattern={{major}}.{{minor}}-${{ matrix.platform }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -50,5 +50,5 @@ jobs:
           file: ./Dockerfile
           platforms: ${{ matrix.platform }}
           push: true
-          tags: ${{ steps.meta.outputs.tags}}, ${{ matrix.platform }}
+          tags: ${{ steps.meta.outputs.tags}}
           labels: ${{ steps.meta.outputs.labels }}
