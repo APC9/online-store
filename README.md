@@ -8,7 +8,7 @@
 2. Ejecutar
 
 ```
- yarn 
+ npm install 
 ```
 3. Tener Nest CLI instalado
 
@@ -27,7 +27,7 @@
 6. Ejecutar la aplicacion en dev:
 
 ```
-yarn start:dev
+npm run start:dev
 ```
 
 
@@ -35,15 +35,22 @@ yarn start:dev
 ## documentacion de los Endpoint en: 
 
 ```
-http://localhost:3000/api/docs
+http://localhost:3000/api/v1/docs
 ```
 
 
 ## Stack usado
 * PostgreSQL
+* Redis
 * Nestjs
 * Docker
 * Swagger
 
 
-## github action
+## GitHub Action Docker Build and Push
+Crear tag
+```
+v*.*.*
+```
+
+Git push follow tags para genera la contruccion de la imagen
