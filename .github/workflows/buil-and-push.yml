@@ -50,5 +50,5 @@ jobs:
           file: ./Dockerfile
           platforms: ${{ matrix.platform }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}-${{ matrix.platform }}
+          tags: ${{ steps.meta.outputs.tags}}, ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
