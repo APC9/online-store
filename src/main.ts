@@ -26,16 +26,22 @@ async function bootstrap() {
 
   //constenido estatico
   app.useStaticAssets({
-    root: join(__dirname, '..', 'public'),
+    root: join(__dirname, '.', 'public'),
     prefix: '/public/',
   });
 
   //Vistas de templates hbs
+  //En el package.json = "build": "nest build && cp -r views dist/views",
+  const isProduction = process.env.NODE_ENV === 'production';
+  const templatesPath = isProduction
+    ? join(__dirname, '.', 'views')
+    : join(__dirname, '..', 'views');
+
   app.setViewEngine({
     engine: {
       handlebars: require('handlebars'),
     },
-    templates: join(__dirname, '..', 'views'),
+    templates: templatesPath,
   });
 
   //Para la  subida de archivos con fastify
@@ -83,6 +89,9 @@ async function bootstrap() {
 
   //Con Fastify en necesario agregar, '0.0.0.0' para poder conectarse en docker
   await app.listen(configService.get('PORT'), '0.0.0.0');
+  Logger.log(
+    `APP running in mode: ${isProduction ? 'production' : 'development'}`,
+  );
   Logger.log(`App running on port ${configService.get('PORT')} `);
 }
 bootstrap();

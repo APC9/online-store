@@ -31,8 +31,8 @@ import { EmailModule } from './email/email.module';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
+        host: configService.get<string>('DB_POSTGRES_HOST'),
+        port: configService.get<number>('DB_POSTGRES_PORT'),
         database: configService.get<string>('POSTGRES_DB'),
         username: configService.get<string>('POSTGRES_USER'),
         password: configService.get<string>('POSTGRES_PASSWORD'),
@@ -49,7 +49,7 @@ import { EmailModule } from './email/email.module';
       useFactory: async (configService: ConfigService) => ({
         store: await redisStore({
           socket: {
-            host: configService.get<string>('DB_HOST'),
+            host: configService.get<string>('DB_REDIS_HOST'),
             port: configService.get<number>('DB_REDIS_PORT'),
           },
         }),

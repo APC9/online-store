@@ -11,10 +11,11 @@ export const joiValidationSchema = Joi.object({
   POSTGRES_DB: Joi.required().error(new Error('DB_NAME IS REQUIRED')),
   POSTGRES_USER: Joi.required().error(new Error('DB_USERNAME IS REQUIRED')),
   POSTGRES_PASSWORD: Joi.required().error(new Error('DB_PASSWORD IS REQUIRED')),
-  DB_HOST: Joi.required().default('localhost').error(new Error('IS REQUIRED')),
-  DB_PORT: Joi.required().default(5432).error(new Error('DB_HOST IS REQUIRED')),
+  DB_POSTGRES_HOST: Joi.required().default('localhost').error(new Error('DB_POSTGRES_HOST IS REQUIRED')),
+  DB_POSTGRES_PORT: Joi.required().default(5432).error(new Error('DB_POSTGRES_PORT IS REQUIRED')),
+  
   DB_REDIS_PORT: Joi.required().default(6379).error(new Error('DB_REDIS_PORT IS REQUIRED')),
-
+  DB_REDIS_HOST: Joi.required().default('localhost').error(new Error('DB_REDIS_HOST IS REQUIRED')),
 
   // CLOUDINARY CREDENTIALS
   CLOUDINARY_CLOUD_NAME: Joi.required().error(new Error('CLOUDINARY_CLOUD_NAME IS REQUIRED')),
