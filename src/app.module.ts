@@ -17,6 +17,8 @@ import { SeedModule } from './seed/seed.module';
 
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -67,6 +69,14 @@ import { EmailModule } from './email/email.module';
       },
     }),
 
+    //Rate Limiting: protection atack DDoS
+    ThrottlerModule.forRoot([
+      {
+        ttl: 10000,
+        limit: 3,
+      },
+    ]),
+
     ProductsModule,
     FileUploadModule,
     CategoriesModule,
@@ -77,6 +87,12 @@ import { EmailModule } from './email/email.module';
     EmailModule,
   ],
   controllers: [],
-  providers: [ConfigService],
+  providers: [
+    ConfigService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
