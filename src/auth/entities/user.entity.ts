@@ -3,10 +3,13 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
 } from 'typeorm';
 import { Roles } from '../../interfaces/dbTypes.enum';
 import { ApiProperty } from '@nestjs/swagger';
+import { Store } from '@src/store/entities/store.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -62,10 +65,10 @@ export class User {
     required: false,
   })
   @Column({
-    type: 'int',
+    type: 'varchar',
     nullable: true,
   })
-  phone?: number;
+  phone?: string;
 
   @ApiProperty({
     example: 'https://encrypted-tbn0.gstatic.com/images',
@@ -153,6 +156,9 @@ export class User {
     default: new Date(),
   })
   updated_at: Date;
+
+  @OneToMany(() => Store, (store) => store.userId)
+  store: Relation<Store>;
 
   //antes de insertar en BBDD convertir a minustculas
   @BeforeInsert()

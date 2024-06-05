@@ -1,13 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  BeforeInsert,
   Column,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   Relation,
 } from 'typeorm';
 import { productStatus } from '../../interfaces';
 import { CategoryProduct } from '../../category-product/entities/category-product.entity';
+import { Store } from '@src/store/entities/store.entity';
 
 @Entity({ name: 'products' })
 export class Product {
@@ -109,6 +112,17 @@ export class Product {
   images_urls?: string[];
 
   @ApiProperty({
+    example: 'zapatos',
+    description: 'slug url',
+    uniqueItems: true,
+    required: false,
+  })
+  @Column({
+    type: 'varchar',
+  })
+  slug?: string;
+
+  @ApiProperty({
     example: '2024-03-26T17:21:11.195Z',
     description: 'Product creation date',
     uniqueItems: true,
@@ -130,10 +144,31 @@ export class Product {
   })
   updated_at: Date;
 
+  @ManyToOne(() => Store, (store) => store.products)
+  store?: Relation<Store>;
+
+  @Column({ type: 'int' })
+  storeId?: number;
+
   @OneToMany(
     () => CategoryProduct,
     (categoryProduct) => categoryProduct.productId,
   )
   categoryProduct?: Relation<CategoryProduct>; //Con compilador SWC
   //categoryProduct?: CategoryProduct;    Trabajar con el compilador por defecto
+
+  @BeforeInsert() // verifica antes de insertar en la base de datos
+  ckeckSlugInsert?() {
+    if (!this.slug) {
+      this.slug = this.name;
+    }
+
+    this.description = this.description.toLocaleLowerCase();
+    this.name = this.name.toLocaleLowerCase();
+
+    this.slug = this.slug
+      .toLowerCase()
+      .replaceAll(' ', '_')
+      .replaceAll("'", '');
+  }
 }

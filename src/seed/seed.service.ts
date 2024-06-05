@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, Logger } from '@nestjs/common';
+/* import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -74,4 +74,4 @@ export class SeedService {
 
     return true;
   }
-}
+} */

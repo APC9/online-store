@@ -14,7 +14,7 @@ export class FileUploadDto {
     required: false,
     example: 'My-online-store',
     description:
-      'Note: It is optional for the users folder, for the products and store folders it is required.',
+      'Note: It is optional for the user folder, but is required for the product and store folders.',
   })
   @IsString()
   @IsOptional()

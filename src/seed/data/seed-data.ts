@@ -1,4 +1,4 @@
-import { productStatus } from 'src/interfaces';
+//import { productStatus } from 'src/interfaces';
 import { CreateProductDto } from '../../products/dto/create-product.dto';
 import { CreateCategoryDto } from 'src/categories/dto/create-category.dto';
 
@@ -7,7 +7,7 @@ interface SeedData {
   categories: CreateCategoryDto[];
 }
 
-export const initialData: SeedData = {
+/* export const initialData: SeedData = {
   categories: [
     {
       name: 'Maxwest',
@@ -1177,4 +1177,4 @@ export const initialData: SeedData = {
       images_urls: ['http://dummyimage.com/112x100.png/5fa2dd/ffffff'],
     },
   ],
-};
+}; */

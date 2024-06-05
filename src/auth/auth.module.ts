@@ -11,10 +11,17 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { FacebookStrategy } from './strategies/facebook.strategy';
 import { EmailModule } from '../email/email.module';
+import { EmailService } from '../email/email.service';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, GoogleStrategy, FacebookStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    GoogleStrategy,
+    FacebookStrategy,
+    EmailService,
+  ],
   imports: [
     ConfigModule,
     EmailModule,
@@ -39,6 +46,7 @@ import { EmailModule } from '../email/email.module';
     GoogleStrategy,
     FacebookStrategy,
     AuthService,
+    EmailModule,
   ],
 })
 export class AuthModule {}

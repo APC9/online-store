@@ -22,6 +22,16 @@ export class CreateProductDto {
   name: string;
 
   @ApiProperty({
+    example: 'mystore',
+    description: 'slug url',
+    uniqueItems: true,
+    required: false,
+  })
+  @IsString()
+  @MinLength(1)
+  slug: string;
+
+  @ApiProperty({
     example: 'ELP-001-GRY',
     minLength: 6,
     maxLength: 20,

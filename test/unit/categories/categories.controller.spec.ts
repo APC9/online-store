@@ -100,7 +100,7 @@ describe('CategoriesController', () => {
     };
 
     beforeEach(async () => {
-      category = await categoriesController.create(createCategoryDto);
+      category = await categoriesController.createCategoryByStore(createCategoryDto);
     });
 
     it('Then it should call categoriesService.create', () => {

@@ -13,12 +13,13 @@ import { joiValidationSchema } from './config';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { CategoriesModule } from './categories/categories.module';
 import { CategoryProductModule } from './category-product/category-product.module';
-import { SeedModule } from './seed/seed.module';
+//import { SeedModule } from './seed/seed.module';
 
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { StoreModule } from './store/store.module';
 
 @Module({
   imports: [
@@ -81,12 +82,14 @@ import { APP_GUARD } from '@nestjs/core';
     FileUploadModule,
     CategoriesModule,
     CategoryProductModule,
-    SeedModule,
+    //SeedModule,
 
     AuthModule,
     EmailModule,
+    StoreModule,
   ],
   controllers: [],
+  exports: [EmailModule],
   providers: [
     ConfigService,
     {

@@ -11,7 +11,16 @@ import { FileUploadService } from './file-upload.service';
 import { diskStorage, FilesFastifyInterceptor } from 'fastify-file-interceptor';
 import { imageFileFilter } from './util/file-upload.util';
 import { FileUploadDto } from './dto/file-upload.dto';
-import { ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Auth } from '@src/auth/decorators/auth.decorator';
+import { Roles } from '@src/interfaces';
 
 @ApiTags('Upload File')
 @Controller('file-upload')
@@ -40,6 +49,7 @@ export class FileUploadController {
     },
     description: 'List of images to upload, maximum of files 5',
   })
+  @ApiBearerAuth()
   @Post()
   @UseInterceptors(
     FilesFastifyInterceptor('images', 5, {
@@ -47,6 +57,8 @@ export class FileUploadController {
       fileFilter: imageFileFilter,
     }),
   )
+  @Auth(Roles.ADMIN_ROLE, Roles.USER_ROLE)
+  @ApiOperation({ summary: 'Upload Files' })
   async uploadFiles(
     @UploadedFiles() files: Express.Multer.File[],
     @Query() fileUploadDto: FileUploadDto,

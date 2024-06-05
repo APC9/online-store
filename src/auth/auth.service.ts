@@ -24,6 +24,8 @@ import {
 import { User } from './entities/user.entity';
 import { JwtPayload } from '../interfaces/jwt.payload.interface';
 import { EmailService } from '../email/email.service';
+import { GetUserByEmailDto } from './dto/getUserByEmail.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -60,12 +62,11 @@ export class AuthService {
       this.sendVerificationEmail(email, user);
 
       await this.userRepository.save(user);
-      delete user.password;
 
       return 'Correctly registered user, please verify your email.';
     } catch (error) {
       this.logger.error(error);
-      return new InternalServerErrorException(error.message);
+      return new InternalServerErrorException(error);
     }
   }
 
@@ -211,5 +212,83 @@ export class AuthService {
       throw new NotFoundException(`User with email ${email} not found`);
 
     return { ...user };
+  }
+
+  async findOneById(id: number) {
+    const user = await this.userRepository.findOneBy({ id, isActive: true });
+
+    if (!user) throw new NotFoundException(`User with Id ${id} not found`);
+
+    return { ...user };
+  }
+
+  async findByEmail({ email }: GetUserByEmailDto) {
+    const user = await this.userRepository.findOne({
+      where: {
+        email,
+        isActive: true,
+      },
+    });
+
+    if (!user)
+      throw new NotFoundException(`User with Email ${email} not found`);
+
+    return { ...user };
+  }
+
+  async findAllUsers() {
+    return await this.userRepository.find();
+  }
+
+  async updateUser(
+    updateUserDto: UpdateUserDto,
+    email: GetUserByEmailDto,
+    user: User,
+  ) {
+    const { first_name, last_Name, phone_number } = updateUserDto;
+    if (email.email !== user.email) {
+      throw new UnauthorizedException(
+        'You are not allowed to update this user',
+      );
+    }
+
+    try {
+      const user = await this.findByEmail(email);
+
+      const firstName = first_name ? first_name.toLowerCase() : user.first_name;
+      const lastName = last_Name ? last_Name.toLowerCase() : user.last_Name;
+      const phoneNumber = phone_number ? phone_number : user.phone;
+
+      const userUpdated = {
+        ...user,
+        first_name: firstName,
+        last_Name: lastName,
+        phone: phoneNumber,
+        updated_at: new Date(),
+      };
+
+      return await this.userRepository.save(userUpdated);
+    } catch (error) {
+      this.logger.error(error.message);
+      return new InternalServerErrorException('Contact administrator');
+    }
+  }
+
+  async deleteUser(email: GetUserByEmailDto, user: User) {
+    if (email.email !== user.email) {
+      throw new UnauthorizedException(
+        'You are not allowed to delete this user',
+      );
+    }
+
+    try {
+      const user = await this.findByEmail(email);
+      user.isActive = false;
+      await this.userRepository.save(user);
+      return `User with email: ${user.email} deleted successfully`;
+    } catch (error) {
+      this.logger.error(error.message);
+      return new InternalServerErrorException('Contact administrator');
+    }
   }
 }
