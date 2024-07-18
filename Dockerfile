@@ -34,6 +34,6 @@ COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 #La contruccion de la imagen en github-action crea un directorio "dist/src/main.js"
-#CMD [ "node","dist/src/main.js"]
+CMD [ "node","dist/src/main.js"]
 
-CMD [ "node","dist/main.js"]
+#CMD [ "node","dist/main.js"]

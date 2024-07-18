@@ -71,7 +71,7 @@ export class ProductsService {
     const lastPage = Math.ceil(totalPages / limit);
 
     const usersCached: Product[] = await this.cacheManger.get(
-      RedisKeyProducts.FIND_ALL,
+      RedisKeyProducts.FIND_ALL_PROD,
     );
 
     if (usersCached && usersCached['data'].length === totalPages)
@@ -94,7 +94,7 @@ export class ProductsService {
       },
     };
 
-    await this.cacheManger.set(RedisKeyProducts.FIND_ALL, metadata, ttl);
+    await this.cacheManger.set(RedisKeyProducts.FIND_ALL_PROD, metadata, ttl);
 
     return metadata;
   }
@@ -121,7 +121,7 @@ export class ProductsService {
     const lastPage = Math.ceil(totalPages / limit);
 
     const usersCached: Product[] = await this.cacheManger.get(
-      RedisKeyProducts.FIND_ALL,
+      RedisKeyProducts.FIND_ALL_PROD,
     );
 
     if (usersCached && usersCached['data'].length === totalPages)
@@ -145,7 +145,7 @@ export class ProductsService {
       },
     };
 
-    await this.cacheManger.set(RedisKeyProducts.FIND_ALL, metadata, ttl);
+    await this.cacheManger.set(RedisKeyProducts.FIND_ALL_PROD, metadata, ttl);
 
     return metadata;
   }

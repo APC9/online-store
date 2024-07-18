@@ -73,7 +73,7 @@ export class CategoriesService {
     const lastPage = Math.ceil(totalPages / limit);
 
     const usersCached: Category[] = await this.cacheManger.get(
-      RedisKeyCategories.FIND_ALL,
+      RedisKeyCategories.FIND_ALL_CATEG,
     );
 
     if (usersCached && usersCached['data'].length === totalPages)
@@ -96,7 +96,11 @@ export class CategoriesService {
       },
     };
 
-    await this.cacheManger.set(RedisKeyCategories.FIND_ALL, metadata, ttl);
+    await this.cacheManger.set(
+      RedisKeyCategories.FIND_ALL_CATEG,
+      metadata,
+      ttl,
+    );
 
     return metadata;
   }
@@ -158,7 +162,7 @@ export class CategoriesService {
     }
 
     const usersCached: Category[] = await this.cacheManger.get(
-      RedisKeyCategories.FIND_ALL,
+      RedisKeyCategories.FIND_ALL_CATEG,
     );
 
     // eslint-disable-next-line prettier/prettier
@@ -174,7 +178,11 @@ export class CategoriesService {
         store_id: store.stores[0].id,
       },
     });
-    await this.cacheManger.set(RedisKeyCategories.FIND_ALL, categories, ttl);
+    await this.cacheManger.set(
+      RedisKeyCategories.FIND_ALL_CATEG,
+      categories,
+      ttl,
+    );
     return [...categories];
   }
 

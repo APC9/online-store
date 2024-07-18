@@ -62,7 +62,7 @@ import { StoreModule } from './store/store.module';
     MailerModule.forRoot({
       transport: {
         host: 'smtp.gmail.com',
-        secure: true,
+        secure: false, // true para SSL
         auth: {
           user: process.env.MAILER_TO,
           pass: process.env.MAILER_PASSWORD,
